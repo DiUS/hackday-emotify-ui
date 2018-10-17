@@ -7,7 +7,6 @@
  */
 
 import React from 'react';
-import Webcam from "react-webcam";
 import Header from 'components/Header';
 import WebcamCapture from 'components/webcamCapture';
 import './style.scss';
