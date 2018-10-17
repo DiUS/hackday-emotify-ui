@@ -1,0 +1,27 @@
+button {
+    margin-left: 20px;
+    cursor: pointer;
+    padding: .8rem 2rem;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #7952b3;
+    border-color: #7952b3;
+    line-height: 1.5;
+    border-radius: .3rem;
+    border: 1px solid;
+}
+
+button:hover {
+  background-color: #7952b3;
+  color: #ffffff;
+}
+
+.snapshot{
+  margin-left: 20px;
+  widows: 500px;
+  height: 300px;
+}
+
+.wrapper {
+  display: flex;
+}
