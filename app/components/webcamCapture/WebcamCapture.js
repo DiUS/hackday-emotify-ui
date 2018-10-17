@@ -2,6 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Webcam from 'react-webcam';
 import './style.scss';
+import {
+  Grid,
+  Row,
+  Col,
+  Button
+} from 'react-bootstrap';
 
 export default class WebcamCapture extends React.Component {
   constructor(props) {
@@ -35,6 +41,7 @@ export default class WebcamCapture extends React.Component {
 
     fetch(url, options).then((res) => {
       res.json().then(data => {
+        console.log(data);
         this.setState({
           data,
           loading: false
@@ -49,12 +56,12 @@ export default class WebcamCapture extends React.Component {
       loading
     } = this.state;
 
-    if (!data.faceSentiments) {
-      return;
-    }
-
     if (loading === true) {
       return 'Processing....';
+    }
+
+    if (!data.faceSentiments) {
+      return;
     }
 
     const face = data.faceSentiments[0];
@@ -81,22 +88,35 @@ export default class WebcamCapture extends React.Component {
       facingMode: 'user'
     };
 
+    const {
+      screenshot,
+      data
+    } = this.state;
+
     return (
-      <div>
-        <div className="wrapper">
-          <Webcam
-            audio={false}
-            height={550}
-            ref={this.setRef}
-            screenshotFormat="image/jpeg"
-            width={550}
-            videoConstraints={videoConstraints}
-          />
-          {this.state.screenshot ? <img src={this.state.screenshot} className="snapshot" alt="snapshot" /> : null}
-        </div>
-        <button onClick={this.capture} >Capture photo</button>
-        <h3>{this.sentimentText()}</h3>
-      </div>
+      <Grid className="margin-top">
+        <Row className="show-grid">
+          <Col md={6}>
+            <Webcam
+              audio={false}
+              ref={this.setRef}
+              screenshotFormat="image/jpeg"
+              width="100%"
+              height="auto"
+              videoConstraints={videoConstraints}
+            />
+            <Button
+              bsSize="large"
+              bsStyle="primary"
+              className="margin-top"
+              onClick={this.capture} >Capture photo</Button>
+          </Col>
+          <Col md={6}>
+            {screenshot ? <img src={screenshot} alt="snapshot" /> : null}
+            <h3>{this.sentimentText()}</h3>
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }
