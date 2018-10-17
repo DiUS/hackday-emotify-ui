@@ -8,13 +8,14 @@
 
 import React from 'react';
 import Webcam from "react-webcam";
-
+import Header from 'components/Header';
+import WebcamCapture from 'components/webcamCapture';
 import './style.scss';
 
 const App = () => (
   <div className="app-wrapper">
     <Header />
-    <Webcam />
+    <WebcamCapture />
   </div>
 );
 
