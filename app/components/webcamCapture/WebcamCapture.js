@@ -7,6 +7,7 @@ export default class WebcamCapture extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
       screenshot: null,
       data: {}
     };
@@ -29,10 +30,14 @@ export default class WebcamCapture extends React.Component {
         content: imageSrc.substr(23)
       })
     };
+
+    this.setState({ loading: true });
+
     fetch(url, options).then((res) => {
       res.json().then(data => {
         this.setState({
-          data
+          data,
+          loading: false
         });
       });
     });
@@ -40,11 +45,16 @@ export default class WebcamCapture extends React.Component {
 
   sentimentText() {
     const {
-      data
+      data,
+      loading
     } = this.state;
 
     if (!data.faceSentiments) {
       return;
+    }
+
+    if (loading === true) {
+      return 'Processing....';
     }
 
     const face = data.faceSentiments[0];
@@ -85,7 +95,7 @@ export default class WebcamCapture extends React.Component {
           {this.state.screenshot ? <img src={this.state.screenshot} className="snapshot" alt="snapshot" /> : null}
         </div>
         <button onClick={this.capture} >Capture photo</button>
-        <p>{this.sentimentText()}</p>
+        <h3>{this.sentimentText()}</h3>
       </div>
     );
   }
